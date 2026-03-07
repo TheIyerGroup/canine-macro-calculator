@@ -3,6 +3,7 @@ import Calculator from '../components/Calculator';
 import Waitlist from '../components/Waitlist';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
+import AdSenseUnit from '../components/AdSenseUnit';
 
 export default function Home() {
   return (
@@ -29,8 +30,8 @@ export default function Home() {
 
         {/* Left Ad Space - Hidden on smaller screens */}
         <div className="hidden xl:block xl:col-span-2">
-          <div className="sticky top-8 h-[600px] w-full bg-slate-100 border border-slate-200 border-dashed rounded-xl flex items-center justify-center text-slate-400 text-sm font-medium">
-            AdSense Space (Left)
+          <div className="sticky top-8 w-full">
+            <AdSenseUnit />
           </div>
         </div>
 
@@ -43,8 +44,8 @@ export default function Home() {
 
         {/* Right Ad Space - Hidden on smaller screens */}
         <div className="hidden xl:block xl:col-span-2">
-          <div className="sticky top-8 h-[600px] w-full bg-slate-100 border border-slate-200 border-dashed rounded-xl flex items-center justify-center text-slate-400 text-sm font-medium">
-            AdSense Space (Right)
+          <div className="sticky top-8 w-full">
+            <AdSenseUnit />
           </div>
         </div>
 
