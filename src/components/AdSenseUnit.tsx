@@ -8,7 +8,8 @@ export default function AdSenseUnit() {
             // @ts-expect-error - adsbygoogle is injected globally by the AdSense script
             (window.adsbygoogle = window.adsbygoogle || []).push({});
         } catch (error) {
-            console.error('AdSense initialization error', error);
+            // Silently ignore errors (e.g., 'adsbygoogle.push() error: All ins elements... already have ads in them')
+            // This prevents console clutter during Next.js Hot Module Replacement / Strict Mode
         }
     }, []);
 
