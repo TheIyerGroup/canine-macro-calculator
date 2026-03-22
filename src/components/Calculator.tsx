@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import FoodSelect from './FoodSelect';
+import CustomFoodForm from './CustomFoodForm';
 import ResultsDisplay from './ResultsDisplay';
 import {
     DogStats,
@@ -80,14 +81,20 @@ export default function Calculator() {
     const [selectedFoodId, setSelectedFoodId] = useState<string>('');
     const [foodVolume, setFoodVolume] = useState<number>(2);
     const [foodUnit, setFoodUnit] = useState<FoodUnit>('cups');
+    const [customFood, setCustomFood] = useState<FoodProfile | null>(null);
 
     const foods = dogFoodsData as FoodProfile[];
-    const selectedFood = foods.find(f => f.id === selectedFoodId) || null;
+    // Resolve the active food: either from the database or custom entry
+    const selectedFood = selectedFoodId === '__custom__'
+        ? customFood
+        : foods.find(f => f.id === selectedFoodId) || null;
 
     React.useEffect(() => {
         if (!selectedFood) return;
 
-        if (selectedFood.type === 'wet') {
+        const isWetLike = ['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(selectedFood.type);
+
+        if (isWetLike) {
             if (system === 'imperial' && foodUnit !== 'cans' && foodUnit !== 'ounces') {
                 setFoodUnit('cans');
             } else if (system === 'metric' && foodUnit !== 'grams') {
@@ -100,7 +107,7 @@ export default function Calculator() {
                 setFoodUnit('grams');
             }
         }
-    }, [selectedFoodId, system]);
+    }, [selectedFoodId, customFood, system]);
 
     const handleReset = () => {
         setSystem('imperial');
@@ -114,17 +121,16 @@ export default function Calculator() {
         setSelectedFoodId('');
         setFoodVolume(2);
         setFoodUnit('cups');
+        setCustomFood(null);
     };
 
     // Derive results
     const needs = useMemo(() => calculateBaselineNeeds(stats, system), [stats, system]);
 
     const intake = useMemo(() => {
-        if (!selectedFoodId) return null;
-        const food = foods.find(f => f.id === selectedFoodId);
-        if (!food) return null;
-        return calculateFoodIntake(food, foodVolume, foodUnit);
-    }, [selectedFoodId, foodVolume, foodUnit, foods]);
+        if (!selectedFood) return null;
+        return calculateFoodIntake(selectedFood, foodVolume, foodUnit);
+    }, [selectedFood, foodVolume, foodUnit]);
 
     const deficits = useMemo(() => {
         if (!needs || !intake) return null;
@@ -296,44 +302,54 @@ export default function Calculator() {
                                 <FoodSelect foods={foods} selectedId={selectedFoodId} onSelect={setSelectedFoodId} />
                             </div>
 
-                            <div className="flex gap-3">
-                                <div className="flex-1">
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Daily Amount</label>
-                                    <input
-                                        type="number"
-                                        step="0.1"
-                                        min="0"
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
-                                        value={foodVolume}
-                                        onChange={(e) => setFoodVolume(parseFloat(e.target.value) || 0)}
-                                    />
-                                </div>
-                                <div className="w-1/3">
-                                    <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
-                                    <select
-                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
-                                        value={foodUnit}
-                                        onChange={(e) => setFoodUnit(e.target.value as FoodUnit)}
-                                    >
-                                        {selectedFood?.type === 'wet' ? (
-                                            system === 'imperial' ? (
-                                                <>
-                                                    <option value="cans">Cans</option>
-                                                    <option value="ounces">Ounces</option>
-                                                </>
+                            {/* Custom Food Form (dynamically shown) */}
+                            {selectedFoodId === '__custom__' && (
+                                <CustomFoodForm onApply={(food) => {
+                                    setCustomFood(food);
+                                }} />
+                            )}
+
+                            {/* Volume Input (shown when a DB food or custom food is applied) */}
+                            {selectedFood && (
+                                <div className="flex gap-3">
+                                    <div className="flex-1">
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Daily Amount</label>
+                                        <input
+                                            type="number"
+                                            step="0.1"
+                                            min="0"
+                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                            value={foodVolume}
+                                            onChange={(e) => setFoodVolume(parseFloat(e.target.value) || 0)}
+                                        />
+                                    </div>
+                                    <div className="w-1/3">
+                                        <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
+                                        <select
+                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
+                                            value={foodUnit}
+                                            onChange={(e) => setFoodUnit(e.target.value as FoodUnit)}
+                                        >
+                                            {(['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(selectedFood?.type ?? '')) ? (
+                                                system === 'imperial' ? (
+                                                    <>
+                                                        <option value="cans">Cans</option>
+                                                        <option value="ounces">Ounces</option>
+                                                    </>
+                                                ) : (
+                                                    <option value="grams">Grams</option>
+                                                )
                                             ) : (
-                                                <option value="grams">Grams</option>
-                                            )
-                                        ) : (
-                                            system === 'imperial' ? (
-                                                <option value="cups">Cups</option>
-                                            ) : (
-                                                <option value="grams">Grams</option>
-                                            )
-                                        )}
-                                    </select>
+                                                system === 'imperial' ? (
+                                                    <option value="cups">Cups</option>
+                                                ) : (
+                                                    <option value="grams">Grams</option>
+                                                )
+                                            )}
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </section>
 
@@ -344,11 +360,11 @@ export default function Calculator() {
                     <div className="bg-slate-50 border border-slate-200 rounded-xl p-1 h-full min-h-[500px]">
                         <div className="bg-white rounded-lg h-full p-6 shadow-sm border border-slate-100">
 
-                            {!selectedFoodId ? (
+                            {!selectedFood ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
                                     <svg className="w-16 h-16 mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                                     <p className="text-lg font-medium text-slate-500 mb-2">Awaiting Diet Selection</p>
-                                    <p className="text-sm max-w-sm">Please complete the three setup steps on the left to reveal your dog's custom macro analysis.</p>
+                                    <p className="text-sm max-w-sm">Please complete the setup steps on the left to reveal your dog's custom macro analysis.</p>
                                 </div>
                             ) : (
                                 <>
