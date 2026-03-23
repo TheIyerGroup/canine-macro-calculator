@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 const SYSTEM_PROMPT = `
 You are an advanced Canine Nutrition and Microbiome AI Reasoning Engine.
-Your task is to analyze the user's selected or inputted diet (and dog stats) for deficiencies across these specific 6 microbiome wellness pillars:
+Your task is to analyze the user's selected or inputted diet (and dog stats) for deficiencies across these specific 7 microbiome wellness pillars:
 
 1. Probiotic Core & Postbiotics: Check for heat-stable spore-forming probiotics (like Bacillus subtilis DSM 15544) and postbiotics (like heat-killed L. helveticus HA-122). Flag if missing.
 2. Prebiotic Synergy: Check for diverse prebiotic fibers like Baobab fruit pulp, short-chain FOS, or Acacia gum. Flag standard kibble fiber as insufficient for microbiome diversity.
