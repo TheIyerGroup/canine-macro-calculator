@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 
 const SYSTEM_PROMPT = `
 You are an advanced Canine Nutrition and Microbiome AI Reasoning Engine.
-Your task is to analyze the user's selected or inputted diet (and dog stats) for deficiencies across these specific 7 microbiome wellness pillars:
+Your task is to analyze the user's selected or inputted diet (and dog stats) and explicitly cross-reference the food's macros and the user's inputs against these 7 clinical pillars:
 
-1. Probiotic Core & Postbiotics: Check for heat-stable spore-forming probiotics (like Bacillus subtilis DSM 15544) and postbiotics (like heat-killed L. helveticus HA-122). Flag if missing.
-2. Prebiotic Synergy: Check for diverse prebiotic fibers like Baobab fruit pulp, short-chain FOS, or Acacia gum. Flag standard kibble fiber as insufficient for microbiome diversity.
-3. Adaptogens (Gut-Brain Axis): Check for stress-resilience bioactives like Ashwagandha (KSM-66), Reishi, or Turkey Tail mushroom. Flag if missing.
-4. Aesthetic & Structural Support: Check for Marine/Type II Collagen Peptides, Glucosamine, MSM, and Omega-3s (EPA/DHA). Flag if missing.
-5. Mineral Matrix: Check for chelated minerals (e.g., Zinc methionine, Magnesium glycinate, Selenium yeast). Flag if missing or if the food relies on inferior non-chelated minerals.
-6. Polyphenol Bioactives: Check for Curcumin, Blueberry anthocyanins, or Quercetin. Flag if missing.
+1. Probiotic Core: Flag if lacking heat-stable spore-forming probiotics (e.g., Bacillus subtilis DSM 15544).
+2. Prebiotic Synergy: Flag if lacking diverse fibers like Baobab fruit pulp or Acacia gum.
+3. Adaptogens: Flag if lacking stress-resilience bioactives like Ashwagandha (KSM-66) or Reishi.
+4. Aesthetic Support: Flag if lacking Marine/Type II Collagen Peptides or Omega-3s.
+5. Mineral Matrix: Flag if lacking chelated minerals (e.g., Zinc methionine).
+6. Polyphenols: Flag if lacking Curcumin or Blueberry anthocyanins.
 
 Analyze the provided food profile strictly against these pillars. Most commercial or basic custom diets will lack these advanced nutrients.
 Return the result strictly as a JSON object matching this schema:
@@ -43,50 +43,50 @@ export async function POST(req: Request) {
                 hasDeficiencies: true,
                 pillars: [
                     {
-                        name: "Probiotic Core & Postbiotics",
+                        name: "Probiotic Core",
                         status: "missing",
-                        analysis: "No heat-stable spore-forming probiotics (like Bacillus subtilis DSM 15544) were detected.",
-                        criticalWarning: "Critical missing nutrients: Probiotics and Postbiotics."
+                        analysis: "No heat-stable spore-forming probiotics (e.g., Bacillus subtilis DSM 15544) were detected.",
+                        criticalWarning: "Critical missing nutrients: Probiotics."
                     },
                     {
                         name: "Prebiotic Synergy",
                         status: "insufficient",
-                        analysis: "Standard kibble fiber is insufficient for microbiome diversity. Lacks Baobab or Acacia gum.",
+                        analysis: "Lacks diverse fibers like Baobab fruit pulp or Acacia gum.",
                         criticalWarning: "Critical missing nutrients: Diverse prebiotic fiber."
                     },
                     {
-                        name: "Adaptogens (Gut-Brain Axis)",
+                        name: "Adaptogens",
                         status: "missing",
-                        analysis: "No Ashwagandha, Reishi, or Turkey Tail mushroom found.",
+                        analysis: "No stress-resilience bioactives like Ashwagandha (KSM-66) or Reishi found.",
                         criticalWarning: "Critical missing nutrients: Adaptogens."
                     },
                     {
-                        name: "Aesthetic & Structural Support",
+                        name: "Aesthetic Support",
                         status: "missing",
-                        analysis: "Missing Marine Collagen Peptides, Glucosamine, MSM, and Omega-3s.",
-                        criticalWarning: "Critical missing nutrients: Joint/Skin support."
+                        analysis: "Missing Marine/Type II Collagen Peptides or Omega-3s.",
+                        criticalWarning: "Critical missing nutrients: Aesthetic & Joint support."
                     },
                     {
                         name: "Mineral Matrix",
                         status: "insufficient",
-                        analysis: "Relies on inferior non-chelated minerals. Missing Zinc methionine.",
+                        analysis: "Missing chelated minerals (e.g., Zinc methionine).",
                         criticalWarning: "Critical missing nutrients: Chelated minerals."
                     },
                     {
-                        name: "Polyphenol Bioactives",
+                        name: "Polyphenols",
                         status: "missing",
-                        analysis: "No Curcumin, Blueberry anthocyanins, or Quercetin detected.",
-                        criticalWarning: "Critical missing nutrients: Polyphenol Bioactives."
+                        analysis: "No Curcumin or Blueberry anthocyanins detected.",
+                        criticalWarning: "Critical missing nutrients: Polyphenols."
                     }
                 ]
             });
         }
 
         const userPrompt = `
-Dog Stats: ${JSON.stringify(stats, null, 2)}
+Dog Stats (including Behavior/Stress Level and Medications): ${JSON.stringify(stats, null, 2)}
 Food Profile: ${JSON.stringify(food, null, 2)}
 
-Please thoroughly analyze this food against the 6 pillars and output the required JSON.
+Please thoroughly cross-reference the food's macros and the user's inputs against these 7 clinical pillars and output the required JSON.
 `;
 
         const response = await fetch(

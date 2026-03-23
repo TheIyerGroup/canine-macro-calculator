@@ -4,6 +4,8 @@ export interface DogStats {
     ageYears: number;
     weight: number;
     activityLevel: 'low' | 'moderate' | 'high' | 'working';
+    behaviorLevel: 'calm' | 'anxious' | 'aggressive';
+    medications: 'none' | 'metronidazole' | 'tylosin' | 'other_antibiotics';
     isNeutered: boolean;
     breeds: string[];
 }

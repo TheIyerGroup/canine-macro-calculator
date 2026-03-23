@@ -74,6 +74,8 @@ export default function Calculator() {
         ageYears: 3,
         weight: 50,
         activityLevel: 'moderate',
+        behaviorLevel: 'calm',
+        medications: 'none',
         isNeutered: true,
         breeds: []
     });
@@ -115,6 +117,8 @@ export default function Calculator() {
             ageYears: 3,
             weight: 50,
             activityLevel: 'moderate',
+            behaviorLevel: 'calm',
+            medications: 'none',
             isNeutered: true,
             breeds: []
         });
@@ -264,6 +268,34 @@ export default function Calculator() {
                             <label htmlFor="neutered" className="ml-2 block text-sm text-slate-700 cursor-pointer">
                                 Spayed / Neutered
                             </label>
+                        </div>
+
+                        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Behavior / Stress Level</label>
+                                <select
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                    value={stats.behaviorLevel}
+                                    onChange={(e) => setStats({ ...stats, behaviorLevel: e.target.value as any })}
+                                >
+                                    <option value="calm">Calm</option>
+                                    <option value="anxious">Anxious</option>
+                                    <option value="aggressive">Aggressive</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">Recent Medications</label>
+                                <select
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                    value={stats.medications}
+                                    onChange={(e) => setStats({ ...stats, medications: e.target.value as any })}
+                                >
+                                    <option value="none">None</option>
+                                    <option value="metronidazole">Metronidazole</option>
+                                    <option value="tylosin">Tylosin</option>
+                                    <option value="other_antibiotics">Other Antibiotics</option>
+                                </select>
+                            </div>
                         </div>
                     </section>
 
