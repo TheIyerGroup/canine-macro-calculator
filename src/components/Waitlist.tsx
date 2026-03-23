@@ -6,10 +6,10 @@ export default function Waitlist() {
     return (
         <section className="mt-12 mb-16 bg-blue-50 border border-blue-100 rounded-2xl p-8 text-center shadow-sm">
             <h2 className="text-2xl font-bold text-slate-900 mb-4">
-                Ready for Personalized Canine Logistics?
+                Missing Critical Nutrients?
             </h2>
             <p className="text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                See how to fill these nutritional gaps perfectly! We are building the <strong className="text-blue-700">Agentic Wellness Automator</strong> for deep-dive, personalized canine meal logistics. Enter your email to join the exclusive waitlist and get 50% off your first month when we launch.
+                The Iyer Group, LLC. is currently working on food-based solutions to seamlessly fill these exact microbiome and nutritional deficiencies. Enter your email to keep in touch and find out more information on these upcoming solutions!
             </p>
             <form
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"

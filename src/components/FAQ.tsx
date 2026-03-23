@@ -24,6 +24,22 @@ const faqs = [
     {
         question: "What is the Resting Energy Requirement (RER)?",
         answer: "RER refers to the basic number of calories a dog needs to sustain essential bodily functions while at rest. By applying an activity multiplier to the RER, we determine the Maintenance Energy Requirement (MER), which is the number of calories needed for a dog's daily lifestyle."
+    },
+    {
+        question: "What is the canine gut microbiome?",
+        answer: "It is a dynamic, co-regulatory partner in your dog's biology that supports digestion, immune regulation, energy metabolism, and temperament."
+    },
+    {
+        question: "What causes gut dysbiosis in dogs?",
+        answer: "A disruption in the microbiome is primarily driven by age, ultra-processed diets with low fiber diversity, antibiotic use, and chronic stress."
+    },
+    {
+        question: "Can I give my dog human supplements to fix these gaps?",
+        answer: "No. While some ingredients overlap, human supplements often contain ingredients that are highly toxic to dogs, such as Xylitol, Alpha-Lipoic Acid, and Resveratrol."
+    },
+    {
+        question: "What are the best probiotics for dogs?",
+        answer: "Multi-strain synbiotics are best, particularly heat-stable spore-forming probiotics (like Bacillus subtilis) paired with diverse prebiotics and postbiotics."
     }
 ];
 

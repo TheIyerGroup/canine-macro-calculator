@@ -368,8 +368,14 @@ export default function Calculator() {
                                 </div>
                             ) : (
                                 <>
-                                    {intake && deficits && (
-                                        <ResultsDisplay needs={needs} intake={intake} deficits={deficits} />
+                                    {intake && deficits && selectedFood && (
+                                        <ResultsDisplay 
+                                            needs={needs} 
+                                            intake={intake} 
+                                            deficits={deficits} 
+                                            food={selectedFood}
+                                            stats={stats}
+                                        />
                                     )}
                                 </>
                             )}
