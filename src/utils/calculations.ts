@@ -2,6 +2,7 @@ export type System = 'imperial' | 'metric';
 
 export interface DogStats {
     ageYears: number;
+    ageMonths: number;
     weight: number;
     activityLevel: 'low' | 'moderate' | 'high' | 'working';
     behaviorLevel: 'calm' | 'anxious' | 'aggressive';
@@ -41,8 +42,8 @@ export function calculateDER(stats: DogStats, system: System): number {
         multiplier = 3.0;
     }
 
-    if (stats.ageYears < 1) {
-        multiplier = (stats.ageYears < 0.33) ? 3.0 : 2.0;
+    if (stats.ageYears === 0) {
+        multiplier = (stats.ageMonths < 4) ? 3.0 : 2.0;
     } else if (stats.ageYears > 7) {
         multiplier *= 0.85;
     }
