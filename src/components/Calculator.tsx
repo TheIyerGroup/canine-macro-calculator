@@ -9,8 +9,9 @@ import {
     System,
     FoodProfile,
     FoodUnit,
+    FoodEntry,
     calculateBaselineNeeds,
-    calculateFoodIntake,
+    calculateCumulativeIntake,
     calculateDeficits
 } from '../utils/calculations';
 import dogFoodsData from '../data/dog-foods.json';
@@ -80,36 +81,61 @@ export default function Calculator() {
         breeds: []
     });
 
-    const [selectedFoodId, setSelectedFoodId] = useState<string>('');
-    const [foodVolume, setFoodVolume] = useState<number>(2);
-    const [foodUnit, setFoodUnit] = useState<FoodUnit>('cups');
-    const [customFood, setCustomFood] = useState<FoodProfile | null>(null);
+    const [foodEntries, setFoodEntries] = useState<FoodEntry[]>([{
+        selectedFoodId: '',
+        foodVolume: 2,
+        foodUnit: 'cups',
+        customFood: null
+    }]);
 
     const foods = dogFoodsData as FoodProfile[];
-    // Resolve the active food: either from the database or custom entry
-    const selectedFood = selectedFoodId === '__custom__'
-        ? customFood
-        : foods.find(f => f.id === selectedFoodId) || null;
+
+    const updateFoodEntry = (index: number, updates: Partial<FoodEntry>) => {
+        setFoodEntries(prev => {
+            const next = [...prev];
+            const current = next[index];
+            const updated = { ...current, ...updates };
+            
+            // Auto switch unit if food changed
+            if (updates.selectedFoodId !== undefined) {
+                const food = updates.selectedFoodId === '__custom__' ? updated.customFood : foods.find(f => f.id === updates.selectedFoodId);
+                if (food) {
+                    const isWetLike = ['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(food.type);
+                    if (isWetLike && system === 'imperial') updated.foodUnit = 'cans';
+                    else if (isWetLike && system === 'metric') updated.foodUnit = 'grams';
+                    else if (!isWetLike && system === 'imperial') updated.foodUnit = 'cups';
+                    else if (!isWetLike && system === 'metric') updated.foodUnit = 'grams';
+                }
+            }
+            
+            next[index] = updated;
+            return next;
+        });
+    };
+
+    const addFoodEntry = () => {
+        setFoodEntries(prev => [...prev, { selectedFoodId: '', foodVolume: 2, foodUnit: system === 'metric' ? 'grams' : 'cups', customFood: null }]);
+    };
+
+    const removeFoodEntry = (index: number) => {
+        setFoodEntries(prev => prev.filter((_, i) => i !== index));
+    };
 
     React.useEffect(() => {
-        if (!selectedFood) return;
-
-        const isWetLike = ['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(selectedFood.type);
-
-        if (isWetLike) {
-            if (system === 'imperial' && foodUnit !== 'cans' && foodUnit !== 'ounces') {
-                setFoodUnit('cans');
-            } else if (system === 'metric' && foodUnit !== 'grams') {
-                setFoodUnit('grams');
+        // Enforce system change units
+        setFoodEntries(prev => prev.map(e => {
+            const isWetLike = e.selectedFoodId && (e.selectedFoodId === '__custom__' ? e.customFood?.type : foods.find(f => f.id === e.selectedFoodId)?.type);
+            let unit = e.foodUnit;
+            if (['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(isWetLike as string)) {
+                if (system === 'imperial' && unit === 'grams') unit = 'cans';
+                if (system === 'metric' && ['cups', 'cans', 'ounces'].includes(unit)) unit = 'grams';
+            } else {
+                if (system === 'imperial' && unit === 'grams') unit = 'cups';
+                if (system === 'metric' && ['cups', 'cans', 'ounces'].includes(unit)) unit = 'grams';
             }
-        } else {
-            if (system === 'imperial' && foodUnit !== 'cups') {
-                setFoodUnit('cups');
-            } else if (system === 'metric' && foodUnit !== 'grams') {
-                setFoodUnit('grams');
-            }
-        }
-    }, [selectedFoodId, customFood, system]);
+            return { ...e, foodUnit: unit };
+        }));
+    }, [system, foods]);
 
     const handleReset = () => {
         setSystem('imperial');
@@ -122,19 +148,16 @@ export default function Calculator() {
             isNeutered: true,
             breeds: []
         });
-        setSelectedFoodId('');
-        setFoodVolume(2);
-        setFoodUnit('cups');
-        setCustomFood(null);
+        setFoodEntries([{ selectedFoodId: '', foodVolume: 2, foodUnit: 'cups', customFood: null }]);
     };
 
     // Derive results
     const needs = useMemo(() => calculateBaselineNeeds(stats, system), [stats, system]);
 
     const intake = useMemo(() => {
-        if (!selectedFood) return null;
-        return calculateFoodIntake(selectedFood, foodVolume, foodUnit);
-    }, [selectedFood, foodVolume, foodUnit]);
+        if (!foodEntries.some(e => e.selectedFoodId)) return null;
+        return calculateCumulativeIntake(foodEntries, foods);
+    }, [foodEntries, foods]);
 
     const deficits = useMemo(() => {
         if (!needs || !intake) return null;
@@ -323,65 +346,91 @@ export default function Calculator() {
 
                     {/* Section 3: Diet Input */}
                     <section>
-                        <div className="flex items-center mb-4">
-                            <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</div>
-                            <h3 className="text-lg font-semibold text-slate-800">Current Diet</h3>
+                        <div className="flex items-center justify-between mb-4">
+                            <div className="flex items-center">
+                                <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</div>
+                                <h3 className="text-lg font-semibold text-slate-800">Current Diet</h3>
+                            </div>
                         </div>
 
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Select Food Brand/Formula</label>
-                                <FoodSelect foods={foods} selectedId={selectedFoodId} onSelect={setSelectedFoodId} />
-                            </div>
-
-                            {/* Custom Food Form (dynamically shown) */}
-                            {selectedFoodId === '__custom__' && (
-                                <CustomFoodForm onApply={(food) => {
-                                    setCustomFood(food);
-                                }} />
-                            )}
-
-                            {/* Volume Input (shown when a DB food or custom food is applied) */}
-                            {selectedFood && (
-                                <div className="flex gap-3">
-                                    <div className="flex-1">
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Daily Amount</label>
-                                        <input
-                                            type="number"
-                                            step="0.1"
-                                            min="0"
-                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
-                                            value={foodVolume}
-                                            onChange={(e) => setFoodVolume(parseFloat(e.target.value) || 0)}
-                                        />
-                                    </div>
-                                    <div className="w-1/3">
-                                        <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
-                                        <select
-                                            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
-                                            value={foodUnit}
-                                            onChange={(e) => setFoodUnit(e.target.value as FoodUnit)}
+                        <div className="space-y-6">
+                            {foodEntries.map((entry, index) => {
+                                const selectedFood = entry.selectedFoodId === '__custom__' ? entry.customFood : foods.find(f => f.id === entry.selectedFoodId);
+                                
+                                return (
+                                <div key={index} className="p-4 border border-slate-200 rounded-xl bg-slate-50 relative">
+                                    {foodEntries.length > 1 && (
+                                        <button 
+                                            onClick={() => removeFoodEntry(index)}
+                                            className="absolute top-3 right-3 text-slate-400 hover:text-red-500 transition-colors"
+                                            title="Remove food"
                                         >
-                                            {(['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(selectedFood?.type ?? '')) ? (
-                                                system === 'imperial' ? (
-                                                    <>
-                                                        <option value="cans">Cans</option>
-                                                        <option value="ounces">Ounces</option>
-                                                    </>
-                                                ) : (
-                                                    <option value="grams">Grams</option>
-                                                )
-                                            ) : (
-                                                system === 'imperial' ? (
-                                                    <option value="cups">Cups</option>
-                                                ) : (
-                                                    <option value="grams">Grams</option>
-                                                )
-                                            )}
-                                        </select>
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                        </button>
+                                    )}
+                                    <div className="space-y-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-slate-700 mb-1">Select Food Brand/Formula {index > 0 ? '(Base or Topper)' : ''}</label>
+                                            <FoodSelect foods={foods} selectedId={entry.selectedFoodId} onSelect={(id) => updateFoodEntry(index, { selectedFoodId: id })} />
+                                        </div>
+
+                                        {entry.selectedFoodId === '__custom__' && (
+                                            <CustomFoodForm onApply={(food) => {
+                                                updateFoodEntry(index, { customFood: food });
+                                            }} />
+                                        )}
+
+                                        {entry.selectedFoodId && (
+                                            <div className="flex gap-3">
+                                                <div className="flex-1">
+                                                    <label className="block text-sm font-medium text-slate-700 mb-1">Daily Amount</label>
+                                                    <input
+                                                        type="number"
+                                                        step="0.1"
+                                                        min="0"
+                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                                        value={entry.foodVolume}
+                                                        onChange={(e) => updateFoodEntry(index, { foodVolume: parseFloat(e.target.value) || 0 })}
+                                                    />
+                                                </div>
+                                                <div className="w-1/3">
+                                                    <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
+                                                    <select
+                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
+                                                        value={entry.foodUnit}
+                                                        onChange={(e) => updateFoodEntry(index, { foodUnit: e.target.value as FoodUnit })}
+                                                    >
+                                                        {(['wet', 'fresh', 'frozen_raw', 'fresh_wet'].includes(selectedFood?.type ?? '')) ? (
+                                                            system === 'imperial' ? (
+                                                                <>
+                                                                    <option value="cans">Cans</option>
+                                                                    <option value="ounces">Ounces</option>
+                                                                </>
+                                                            ) : (
+                                                                <option value="grams">Grams</option>
+                                                            )
+                                                        ) : (
+                                                            system === 'imperial' ? (
+                                                                <option value="cups">Cups</option>
+                                                            ) : (
+                                                                <option value="grams">Grams</option>
+                                                            )
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
-                            )}
+                            )})}
+                            
+                            <button
+                                onClick={addFoodEntry}
+                                className="w-full py-3 border-2 border-dashed border-blue-200 text-blue-600 rounded-xl font-medium hover:bg-blue-50 hover:border-blue-300 transition-colors flex items-center justify-center"
+                            >
+                                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                                Add Another Food / Topper
+                            </button>
                         </div>
                     </section>
 
@@ -392,7 +441,7 @@ export default function Calculator() {
                     <div className="bg-slate-50 border border-slate-200 rounded-xl p-1 h-full min-h-[500px]">
                         <div className="bg-white rounded-lg h-full p-6 shadow-sm border border-slate-100">
 
-                            {!selectedFood ? (
+                            {!foodEntries.some(e => e.selectedFoodId) ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
                                     <svg className="w-16 h-16 mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                                     <p className="text-lg font-medium text-slate-500 mb-2">Awaiting Diet Selection</p>
@@ -400,12 +449,13 @@ export default function Calculator() {
                                 </div>
                             ) : (
                                 <>
-                                    {intake && deficits && selectedFood && (
+                                    {intake && deficits && (
                                         <ResultsDisplay 
                                             needs={needs} 
                                             intake={intake} 
                                             deficits={deficits} 
-                                            food={selectedFood}
+                                            foodEntries={foodEntries}
+                                            dbFoods={foods}
                                             stats={stats}
                                         />
                                     )}

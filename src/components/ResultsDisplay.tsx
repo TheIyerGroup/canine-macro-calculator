@@ -1,17 +1,18 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { NutritionalNeeds, Deficits, FoodProfile, DogStats } from '../utils/calculations';
+import { NutritionalNeeds, Deficits, FoodProfile, FoodEntry, DogStats } from '../utils/calculations';
 
 interface ResultsDisplayProps {
     needs: NutritionalNeeds;
     intake: NutritionalNeeds;
     deficits: Deficits;
-    food: FoodProfile;
+    foodEntries: FoodEntry[];
+    dbFoods: FoodProfile[];
     stats: DogStats;
 }
 
-export default function ResultsDisplay({ needs, intake, deficits, food, stats }: ResultsDisplayProps) {
+export default function ResultsDisplay({ needs, intake, deficits, foodEntries, dbFoods, stats }: ResultsDisplayProps) {
 
     const [microbiomeReport, setMicrobiomeReport] = useState<any>(null);
     const [loadingReport, setLoadingReport] = useState(false);
@@ -21,10 +22,19 @@ export default function ResultsDisplay({ needs, intake, deficits, food, stats }:
             setLoadingReport(true);
             setMicrobiomeReport(null);
             try {
+                const bodyPayload = {
+                    foodEntries: foodEntries.map(e => ({
+                        volume: e.foodVolume,
+                        unit: e.foodUnit,
+                        profile: e.selectedFoodId === '__custom__' ? e.customFood : dbFoods.find(f => f.id === e.selectedFoodId)
+                    })).filter(e => e.profile),
+                    stats 
+                };
+
                 const res = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ food, stats })
+                    body: JSON.stringify(bodyPayload)
                 });
                 if (res.ok) {
                     const data = await res.json();
@@ -37,7 +47,7 @@ export default function ResultsDisplay({ needs, intake, deficits, food, stats }:
             }
         };
         fetchReport();
-    }, [food, stats]);
+    }, [foodEntries, dbFoods, stats]);
 
 
     const StatCard = ({ label, need, provided, deficitVal, pct, unit }: { label: string, need: number, provided: number, deficitVal: number, pct: number, unit: string }) => {

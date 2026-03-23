@@ -11,7 +11,8 @@ Your task is to analyze the user's selected or inputted diet (and dog stats) and
 5. Mineral Matrix: Flag if lacking chelated minerals (e.g., Zinc methionine).
 6. Polyphenols: Flag if lacking Curcumin or Blueberry anthocyanins.
 
-Analyze the provided food profile strictly against these pillars. Most commercial or basic custom diets will lack these advanced nutrients.
+Analyze the provided cumulative food profiles strictly against these pillars. Most commercial or basic custom diets will lack these advanced nutrients.
+New AI Rule: If the user inputs a commercial base diet alongside a custom or actual real-food topper, evaluate the caloric breakdown. If the topper accounts for MORE THAN 10% of the dog's total daily caloric intake, you MUST strictly flag a critical warning that adding more than 10% fresh food can severely unbalance a commercial diet's micronutrient profile.
 Return the result strictly as a JSON object matching this schema:
 {
   "summary": "A 1-2 sentence overview of the microbiome gap analysis.",
@@ -31,7 +32,7 @@ No markdown formatting or backticks outside of the JSON string. Return only vali
 export async function POST(req: Request) {
     try {
         const body = await req.json();
-        const { food, stats } = body;
+        const { foodEntries, stats } = body;
 
         const apiKey = process.env.GEMINI_API_KEY;
         if (!apiKey) {
@@ -84,9 +85,9 @@ export async function POST(req: Request) {
 
         const userPrompt = `
 Dog Stats (including Behavior/Stress Level and Medications): ${JSON.stringify(stats, null, 2)}
-Food Profile: ${JSON.stringify(food, null, 2)}
+Food Profiles (Combination Feeding): ${JSON.stringify(foodEntries, null, 2)}
 
-Please thoroughly cross-reference the food's macros and the user's inputs against these 7 clinical pillars and output the required JSON.
+Please thoroughly cross-reference the cumulative food macros and the user's inputs against these 7 clinical pillars and output the required JSON.
 `;
 
         const response = await fetch(

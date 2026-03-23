@@ -4422,5 +4422,57 @@
     "calciumPercent": 1.5,
     "phosphorusPercent": 1,
     "kcalPerKg": 4200
+  },
+  {
+    "id": "new_101",
+    "brand": "Wellness",
+    "name": "Complete Health Large Breed Adult",
+    "type": "standard_kibble",
+    "proteinPercent": 26,
+    "fatPercent": 11,
+    "fiberPercent": 5,
+    "moisturePercent": 10,
+    "calciumPercent": 1.1,
+    "phosphorusPercent": 0.8,
+    "kcalPerCup": 350
+  },
+  {
+    "id": "new_102",
+    "brand": "Blue Buffalo",
+    "name": "Life Protection Formula Small Breed Adult",
+    "type": "standard_kibble",
+    "proteinPercent": 26,
+    "fatPercent": 15,
+    "fiberPercent": 4,
+    "moisturePercent": 10,
+    "calciumPercent": 1.2,
+    "phosphorusPercent": 0.9,
+    "kcalPerCup": 398
+  },
+  {
+    "id": "new_103",
+    "brand": "Purina Pro Plan",
+    "name": "Specialized Large Breed Adult Chicken & Rice Formula",
+    "type": "standard_kibble",
+    "proteinPercent": 26,
+    "fatPercent": 12,
+    "fiberPercent": 4.5,
+    "moisturePercent": 12,
+    "calciumPercent": 1,
+    "phosphorusPercent": 0.8,
+    "kcalPerCup": 407
+  },
+  {
+    "id": "new_104",
+    "brand": "Royal Canin",
+    "name": "Size Health Nutrition Small Indoor Adult Dry Dog Food",
+    "type": "standard_kibble",
+    "proteinPercent": 19,
+    "fatPercent": 12,
+    "fiberPercent": 3.8,
+    "moisturePercent": 10.5,
+    "calciumPercent": 0.73,
+    "phosphorusPercent": 0.56,
+    "kcalPerCup": 354
   }
 ]

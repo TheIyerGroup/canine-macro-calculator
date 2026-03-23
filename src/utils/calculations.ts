@@ -149,3 +149,39 @@ export function calculateDeficits(needs: NutritionalNeeds, intake: NutritionalNe
         calciumPercent: (intake.calciumMinGrams / needs.calciumMinGrams) * 100,
     };
 }
+
+export interface FoodEntry {
+    selectedFoodId: string;
+    foodVolume: number;
+    foodUnit: FoodUnit;
+    customFood: FoodProfile | null;
+}
+
+export function calculateCumulativeIntake(entries: FoodEntry[], dbFoods: FoodProfile[]): NutritionalNeeds {
+    let totalKcal = 0;
+    let totalProtein = 0;
+    let totalFat = 0;
+    let totalCalcium = 0;
+
+    for (const entry of entries) {
+        if (!entry.selectedFoodId) continue;
+        const food = entry.selectedFoodId === '__custom__' 
+            ? entry.customFood 
+            : dbFoods.find(f => f.id === entry.selectedFoodId);
+        
+        if (!food) continue;
+        
+        const intake = calculateFoodIntake(food, entry.foodVolume, entry.foodUnit);
+        totalKcal += intake.kcal;
+        totalProtein += intake.proteinMinGrams;
+        totalFat += intake.fatMinGrams;
+        totalCalcium += intake.calciumMinGrams;
+    }
+
+    return {
+        kcal: totalKcal,
+        proteinMinGrams: totalProtein,
+        fatMinGrams: totalFat,
+        calciumMinGrams: totalCalcium
+    };
+}
