@@ -4,6 +4,7 @@ import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
 import AdSenseUnit from '../components/AdSenseUnit';
 import Link from 'next/link';
+import SafeWeightManagement from './nutrition-guide/safe-weight-management/page';
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
           <Calculator />
           <Waitlist />
           <FAQ />
+          <SafeWeightManagement />
         </div>
 
         {/* Right Ad Space - Hidden on smaller screens */}
