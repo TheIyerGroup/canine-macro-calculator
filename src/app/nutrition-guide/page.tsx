@@ -9,6 +9,24 @@ export const metadata = {
 
 const articles = [
     {
+        title: "Safe Weight Management and Energy Requirements",
+        description: "Clinical guidelines for canine weight management, explaining the difference between RER and MER, the 9-point BCS system, and treat calorie allocation.",
+        slug: "safe-weight-management",
+        readTime: "8 min read",
+    },
+    {
+        title: "The Canine Gut Microbiome and Eubiosis",
+        description: "Detailed overview of the five dominant bacterial phyla, dysbiosis triggers, and how gut health impacts canine behavior and anxiety.",
+        slug: "canine-gut-microbiome",
+        readTime: "9 min read",
+    },
+    {
+        title: "The 7 Pillars of Canine Gut Formulation",
+        description: "Breakdown of the clinical approach to restoring eubiosis, from probiotic cores and prebiotics to the severe toxicity of human supplements.",
+        slug: "7-pillars-of-gut-formulation",
+        readTime: "10 min read",
+    },
+    {
         title: "Understanding Canine Macronutrients: Protein, Fat, and Calcium",
         description: "A deep dive into the physiological requirements of dogs, exploring why minimum protein and fat thresholds are critical for longevity and disease prevention.",
         slug: "understanding-macronutrients",

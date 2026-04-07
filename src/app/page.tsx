@@ -8,6 +8,24 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 selection:bg-blue-200 selection:text-blue-900">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Canine Diet Deficit Calculator",
+            "operatingSystem": "Web",
+            "applicationCategory": "HealthApplication",
+            "description": "Veterinary clinical deficit calculator for comparing dog dietary needs to food nutritional profiles.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          })
+        }}
+      />
 
       {/* Header */}
       <header className="w-full bg-white border-b border-slate-200 shadow-sm py-8">

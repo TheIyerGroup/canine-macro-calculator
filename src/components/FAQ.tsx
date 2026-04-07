@@ -40,12 +40,37 @@ const faqs = [
     {
         question: "What are the best probiotics for dogs?",
         answer: "Multi-strain synbiotics are best, particularly heat-stable spore-forming probiotics (like Bacillus subtilis) paired with diverse prebiotics and postbiotics."
+    },
+    {
+        question: "What is the difference between BCS and MCS?",
+        answer: "Body Condition Score (BCS) measures body fat on a 9-point scale. Muscle Condition Score (MCS) specifically evaluates muscle wasting over areas like the temporal bones, scapulae, and lumbar vertebrae. A dog can be overweight (high BCS) but still suffer from severe muscle wasting (low MCS) due to a low-protein diet."
+    },
+    {
+        question: "How do you restore gut balance after antibiotic use?",
+        answer: "Clinical recovery often involves the use of synbiotics (the combination of prebiotics and probiotics). Utilizing a high-quality synbiotic introduces beneficial bacteria while simultaneously providing the specific dietary fibers required to nourish and establish those strains in the sterile gut."
     }
 ];
 
 export default function FAQ() {
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer
+            }
+        }))
+    };
+
     return (
         <section className="mt-16 max-w-3xl mx-auto">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-6">
                 {faqs.map((faq, index) => (

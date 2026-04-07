@@ -9,7 +9,7 @@ export default function Waitlist() {
                 Missing Critical Nutrients?
             </h2>
             <p className="text-slate-700 max-w-2xl mx-auto mb-6 leading-relaxed">
-                The Iyer Group, LLC. is currently working on food-based solutions to seamlessly fill these exact microbiome and nutritional deficiencies. Enter your email to keep in touch and find out more information on these upcoming solutions!
+                The Iyer Group, LLC. is currently working on food-based solutions to seamlessly fill these exact microbiome and nutritional deficiencies. Enter your email to join the waitlist for the upcoming <strong>Agentic Wellness Automator</strong>—totally optional, your calculator results above are always free and unlocked!
             </p>
             <form
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
