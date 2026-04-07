@@ -9,21 +9,21 @@ export const metadata = {
 
 export default function ArticleBreedActivity() {
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-900 selection:bg-blue-200 selection:text-blue-900">
+        <div className="min-h-screen bg-stone-50 flex flex-col font-sans text-stone-900 selection:bg-amber-200 selection:text-amber-900">
 
             {/* Header */}
-            <header className="w-full bg-white border-b border-slate-200 shadow-sm py-8 md:py-12 relative">
+            <header className="w-full bg-white border-b border-stone-200 shadow-sm py-8 md:py-12 relative">
                 <div className="absolute top-4 left-4 md:top-8 md:left-8">
-                    <Link href="/nutrition-guide" className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">
+                    <Link href="/nutrition-guide" className="inline-flex items-center text-sm font-semibold text-amber-600 hover:text-amber-800 transition-colors">
                         &larr; Back to Hub
                     </Link>
                 </div>
                 <div className="max-w-3xl mx-auto px-4 text-center mt-8 md:mt-0">
-                    <span className="text-sm font-bold tracking-widest text-blue-600 uppercase mb-3 block">Veterinary Nutrition Standard</span>
-                    <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    <span className="text-sm font-bold tracking-widest text-amber-600 uppercase mb-3 block">Veterinary Nutrition Standard</span>
+                    <h1 className="text-3xl md:text-5xl font-extrabold text-stone-900 tracking-tight leading-tight">
                         Why Breed Size and Activity Level Change Your Dog's Diet Deficits
                     </h1>
-                    <div className="mt-6 flex items-center justify-center space-x-4 text-sm text-slate-500 font-medium">
+                    <div className="mt-6 flex items-center justify-center space-x-4 text-sm text-stone-500 font-medium">
                         <span>By the Clinical Nutrition Team</span>
                         <span>&bull;</span>
                         <span>5 min read</span>
@@ -32,10 +32,10 @@ export default function ArticleBreedActivity() {
             </header>
 
             {/* Article Content */}
-            <main className="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 bg-white my-8 shadow-sm border border-slate-200 rounded-2xl">
-                <article className="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-800 prose-a:text-blue-600 hover:prose-a:text-blue-800">
+            <main className="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-6 py-12 bg-white my-8 shadow-sm border border-stone-200 rounded-2xl">
+                <article className="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-headings:text-stone-800 prose-a:text-amber-600 hover:prose-a:text-amber-800">
 
-                    <p className="lead text-xl text-slate-700 font-medium pb-6 border-b border-slate-100">
+                    <p className="lead text-xl text-stone-700 font-medium pb-6 border-b border-stone-100">
                         A standardized, one-size-fits-all feeding chart found on the back of a kibble bag is a statistical generalization. It fails to account for the immense morphological diversity across the canine species. The metabolic machinery of a 10-pound Pomeranian operates entirely differently than that of a 120-pound Cane Corso.
                     </p>
 

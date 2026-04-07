@@ -60,7 +60,7 @@ export default function ResultsDisplay({ needs, intake, deficits, foodEntries, d
         return (
             <div className={`p-5 rounded-xl border ${hasWarning ? 'bg-red-50 border-red-200' : 'bg-emerald-50 border-emerald-200'} transition-all`}>
                 <div className="flex justify-between items-start mb-3">
-                    <h4 className="font-semibold text-slate-700 capitalize">{label}</h4>
+                    <h4 className="font-semibold text-stone-700 capitalize">{label}</h4>
                     <span className={`text-xs font-bold px-2 py-1 rounded-full ${hasWarning ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
                         {Math.round(pct)}% Met
                     </span>
@@ -68,12 +68,12 @@ export default function ResultsDisplay({ needs, intake, deficits, foodEntries, d
 
                 <div className="space-y-1 text-sm">
                     <div className="flex justify-between">
-                        <span className="text-slate-500">Target Minimim:</span>
-                        <span className="font-medium text-slate-800">{Math.round(need)} {unit}</span>
+                        <span className="text-stone-500">Target Minimim:</span>
+                        <span className="font-medium text-stone-800">{Math.round(need)} {unit}</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-slate-500">Diet Provides:</span>
-                        <span className="font-medium text-slate-800">{Math.round(provided)} {unit}</span>
+                        <span className="text-stone-500">Diet Provides:</span>
+                        <span className="font-medium text-stone-800">{Math.round(provided)} {unit}</span>
                     </div>
                 </div>
 
@@ -96,23 +96,23 @@ export default function ResultsDisplay({ needs, intake, deficits, foodEntries, d
 
     return (
         <div className="mt-8">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Nutritional Gap Analysis</h3>
+            <h3 className="text-2xl font-bold text-stone-900 mb-6 border-b border-stone-200 pb-2">Nutritional Gap Analysis</h3>
 
             {/* Calories Overview */}
-            <div className="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-6">
+            <div className="bg-stone-50 rounded-xl p-6 border border-stone-200 mb-6">
                 <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>
-                        <h4 className="text-lg font-semibold text-slate-800">Daily Calorie Balance</h4>
-                        <p className="text-slate-500 text-sm mt-1">Comparing estimated energy requirement (DER) to food intake.</p>
+                        <h4 className="text-lg font-semibold text-stone-800">Daily Calorie Balance</h4>
+                        <p className="text-stone-500 text-sm mt-1">Comparing estimated energy requirement (DER) to food intake.</p>
                     </div>
                     <div className="flex items-center space-x-6">
                         <div className="text-center">
-                            <div className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Required</div>
-                            <div className="text-xl font-bold text-slate-800">{Math.round(needs.kcal)} <span className="text-sm font-normal text-slate-500">kcal</span></div>
+                            <div className="text-xs text-stone-500 uppercase font-semibold tracking-wider">Required</div>
+                            <div className="text-xl font-bold text-stone-800">{Math.round(needs.kcal)} <span className="text-sm font-normal text-stone-500">kcal</span></div>
                         </div>
-                        <div className="text-slate-300 text-2xl font-light">|</div>
+                        <div className="text-stone-300 text-2xl font-light">|</div>
                         <div className="text-center">
-                            <div className="text-xs text-slate-500 uppercase font-semibold tracking-wider">Provided</div>
+                            <div className="text-xs text-stone-500 uppercase font-semibold tracking-wider">Provided</div>
                             <div className={`text-xl font-bold ${deficits.kcalPercent < 90 ? 'text-orange-600' : deficits.kcalPercent > 110 ? 'text-orange-600' : 'text-emerald-600'}`}>
                                 {Math.round(intake.kcal)} <span className="text-sm font-normal opacity-70">kcal</span>
                             </div>
@@ -151,12 +151,12 @@ export default function ResultsDisplay({ needs, intake, deficits, foodEntries, d
 
             {/* Microbiome Report */}
             <div className="mt-10">
-                <h3 className="text-2xl font-bold text-slate-900 mb-6 border-b border-slate-200 pb-2">Microbiome & Gut Health Report</h3>
+                <h3 className="text-2xl font-bold text-stone-900 mb-6 border-b border-stone-200 pb-2">Microbiome & Gut Health Report</h3>
                 
                 {loadingReport ? (
-                    <div className="bg-slate-50 rounded-xl p-8 border border-slate-200 text-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-                        <p className="text-slate-600">Analyzing diet against 6 microbiome wellness pillars...</p>
+                    <div className="bg-stone-50 rounded-xl p-8 border border-stone-200 text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600 mx-auto mb-4"></div>
+                        <p className="text-stone-600">Analyzing diet against 6 microbiome wellness pillars...</p>
                     </div>
                 ) : microbiomeReport ? (
                     <div className="space-y-6">
@@ -182,12 +182,12 @@ export default function ResultsDisplay({ needs, intake, deficits, foodEntries, d
                                 return (
                                     <div key={idx} className={`p-4 rounded-xl border ${isMissing ? 'bg-red-50/50 border-red-200' : 'bg-emerald-50/50 border-emerald-200'}`}>
                                         <div className="flex justify-between items-start mb-2">
-                                            <h4 className="font-semibold text-slate-800">{pillar.name}</h4>
+                                            <h4 className="font-semibold text-stone-800">{pillar.name}</h4>
                                             <span className={`text-xs font-bold px-2 py-1 rounded-full ${isMissing ? 'bg-red-100 text-red-700' : 'bg-emerald-100 text-emerald-700'}`}>
                                                 {pillar.status}
                                             </span>
                                         </div>
-                                        <p className="text-sm text-slate-600 mb-2">{pillar.analysis}</p>
+                                        <p className="text-sm text-stone-600 mb-2">{pillar.analysis}</p>
                                         {pillar.criticalWarning && (
                                             <p className="text-xs font-medium text-red-600 flex items-start mt-2 pt-2 border-t border-red-100">
                                                 <svg className="w-4 h-4 mr-1.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>

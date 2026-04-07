@@ -14,7 +14,7 @@ export default function AdSenseUnit() {
     }, []);
 
     return (
-        <div className="w-full h-full min-h-[600px] flex items-center justify-center bg-slate-50 border border-slate-200 border-dashed rounded-xl overflow-hidden p-2">
+        <div className="w-full h-full min-h-[600px] flex items-center justify-center bg-stone-50 border border-stone-200 border-dashed rounded-xl overflow-hidden p-2">
             <ins
                 className="adsbygoogle"
                 style={{ display: 'block', width: '100%', height: '100%' }}

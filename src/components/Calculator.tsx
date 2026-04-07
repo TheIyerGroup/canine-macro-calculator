@@ -184,24 +184,24 @@ export default function Calculator() {
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-visible">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-visible">
             {/* Header & Toggle */}
-            <div className="bg-slate-50 p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4 rounded-t-2xl">
+            <div className="bg-stone-50 p-6 border-b border-stone-200 flex flex-col sm:flex-row justify-between items-center gap-4 rounded-t-2xl">
                 <div>
-                    <h2 className="text-2xl font-bold text-slate-800">Dietary Assessment</h2>
-                    <p className="text-slate-500 text-sm mt-1">Enter your dog's details to calculate exact nutritional needs.</p>
+                    <h2 className="text-2xl font-bold text-stone-800">Dietary Assessment</h2>
+                    <p className="text-stone-500 text-sm mt-1">Enter your dog's details to calculate exact nutritional needs.</p>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <button
                         onClick={handleReset}
-                        className="px-4 py-2 rounded-md text-sm font-medium border border-slate-300 text-slate-600 hover:bg-slate-100 transition-colors"
+                        className="px-4 py-2 rounded-md text-sm font-medium border border-stone-300 text-stone-600 hover:bg-stone-100 transition-colors"
                     >
                         Reset Calculator
                     </button>
-                    <div className="inline-flex bg-slate-200 rounded-lg p-1">
+                    <div className="inline-flex bg-stone-200 rounded-lg p-1">
                         <button
-                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${system === 'imperial' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${system === 'imperial' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
                             onClick={() => {
                                 if (system !== 'imperial') {
                                     setSystem('imperial');
@@ -213,7 +213,7 @@ export default function Calculator() {
                             Imperial (lbs, cups)
                         </button>
                         <button
-                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${system === 'metric' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'}`}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${system === 'metric' ? 'bg-white text-amber-600 shadow-sm' : 'text-stone-600 hover:text-stone-900'}`}
                             onClick={() => {
                                 if (system !== 'metric') {
                                     setSystem('metric');
@@ -236,25 +236,25 @@ export default function Calculator() {
                     {/* Section 1: Basic Stats */}
                     <section>
                         <div className="flex items-center mb-4">
-                            <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">1</div>
-                            <h3 className="text-lg font-semibold text-slate-800">Basic Stats</h3>
+                            <div className="bg-amber-100 text-amber-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">1</div>
+                            <h3 className="text-lg font-semibold text-stone-800">Basic Stats</h3>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Age</label>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">Age</label>
                                 <div className="flex gap-2">
                                     <div className="flex-1">
                                         <div className="relative">
                                             <input
                                                 type="number"
                                                 min="0"
-                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
+                                                className="w-full pl-3 pr-8 py-2 border border-stone-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 shadow-sm transition-colors"
                                                 value={stats.ageYears}
                                                 onChange={(e) => setStats({ ...stats, ageYears: parseInt(e.target.value) || 0 })}
                                             />
                                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                                <span className="text-slate-400 text-xs">Yrs</span>
+                                                <span className="text-stone-400 text-xs">Yrs</span>
                                             </div>
                                         </div>
                                     </div>
@@ -264,24 +264,24 @@ export default function Calculator() {
                                                 type="number"
                                                 min="0"
                                                 max="11"
-                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
+                                                className="w-full pl-3 pr-8 py-2 border border-stone-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 shadow-sm transition-colors"
                                                 value={stats.ageMonths}
                                                 onChange={(e) => setStats({ ...stats, ageMonths: parseInt(e.target.value) || 0 })}
                                             />
                                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                                <span className="text-slate-400 text-xs">Mos</span>
+                                                <span className="text-stone-400 text-xs">Mos</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Weight ({system === 'imperial' ? 'lbs' : 'kg'})</label>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">Weight ({system === 'imperial' ? 'lbs' : 'kg'})</label>
                                 <input
                                     type="number"
                                     step="0.5"
                                     min="0"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 shadow-sm transition-colors"
                                     value={stats.weight}
                                     onChange={(e) => setStats({ ...stats, weight: parseFloat(e.target.value) || 0 })}
                                 />
@@ -289,10 +289,10 @@ export default function Calculator() {
                         </div>
 
                         <div className="mt-4">
-                            <label className="block text-sm font-medium text-slate-700 mb-2">Activity Level</label>
+                            <label className="block text-sm font-medium text-stone-700 mb-2">Activity Level</label>
                             <div className="grid grid-cols-2 gap-2">
                                 {(['low', 'moderate', 'high', 'working'] as const).map(level => (
-                                    <label key={level} className={`cursor-pointer border rounded-lg px-3 py-2 text-center text-sm capitalize transition-colors ${stats.activityLevel === level ? 'bg-blue-50 border-blue-500 text-blue-700 font-medium' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+                                    <label key={level} className={`cursor-pointer border rounded-lg px-3 py-2 text-center text-sm capitalize transition-colors ${stats.activityLevel === level ? 'bg-amber-50 border-amber-500 text-amber-700 font-medium' : 'border-stone-200 text-stone-600 hover:bg-stone-50'}`}>
                                         <input
                                             type="radio"
                                             name="activity"
@@ -310,20 +310,20 @@ export default function Calculator() {
                             <input
                                 type="checkbox"
                                 id="neutered"
-                                className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                                className="w-4 h-4 text-amber-600 border-stone-300 rounded focus:ring-amber-500"
                                 checked={stats.isNeutered}
                                 onChange={(e) => setStats({ ...stats, isNeutered: e.target.checked })}
                             />
-                            <label htmlFor="neutered" className="ml-2 block text-sm text-slate-700 cursor-pointer">
+                            <label htmlFor="neutered" className="ml-2 block text-sm text-stone-700 cursor-pointer">
                                 Spayed / Neutered
                             </label>
                         </div>
 
                         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Behavior / Stress Level</label>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">Behavior / Stress Level</label>
                                 <select
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white"
                                     value={stats.behaviorLevel}
                                     onChange={(e) => setStats({ ...stats, behaviorLevel: e.target.value as any })}
                                 >
@@ -333,9 +333,9 @@ export default function Calculator() {
                                 </select>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">Recent Medications</label>
+                                <label className="block text-sm font-medium text-stone-700 mb-1">Recent Medications</label>
                                 <select
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white"
+                                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none bg-white"
                                     value={stats.medications}
                                     onChange={(e) => setStats({ ...stats, medications: e.target.value as any })}
                                 >
@@ -351,20 +351,20 @@ export default function Calculator() {
                     {/* Section 2: Breed Selection */}
                     <section>
                         <div className="flex items-center mb-4">
-                            <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">2</div>
-                            <h3 className="text-lg font-semibold text-slate-800">Breed Profile</h3>
+                            <div className="bg-amber-100 text-amber-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">2</div>
+                            <h3 className="text-lg font-semibold text-stone-800">Breed Profile</h3>
                         </div>
 
-                        <div className="border border-slate-200 rounded-lg max-h-48 overflow-y-auto p-3 bg-slate-50">
+                        <div className="border border-stone-200 rounded-lg max-h-48 overflow-y-auto p-3 bg-stone-50">
                             {ALL_BREEDS.map(breed => (
                                 <label key={breed} className="flex items-center py-1.5 px-2 hover:bg-white rounded cursor-pointer transition-colors">
                                     <input
                                         type="checkbox"
-                                        className="w-4 h-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500"
+                                        className="w-4 h-4 text-amber-600 border-stone-300 rounded focus:ring-amber-500"
                                         checked={stats.breeds.includes(breed)}
                                         onChange={() => toggleBreed(breed)}
                                     />
-                                    <span className="ml-2 text-sm text-slate-700">{breed}</span>
+                                    <span className="ml-2 text-sm text-stone-700">{breed}</span>
                                 </label>
                             ))}
                         </div>
@@ -374,8 +374,8 @@ export default function Calculator() {
                     <section>
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center">
-                                <div className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</div>
-                                <h3 className="text-lg font-semibold text-slate-800">Current Diet</h3>
+                                <div className="bg-amber-100 text-amber-700 w-8 h-8 rounded-full flex items-center justify-center font-bold mr-3">3</div>
+                                <h3 className="text-lg font-semibold text-stone-800">Current Diet</h3>
                             </div>
                         </div>
 
@@ -384,11 +384,11 @@ export default function Calculator() {
                                 const selectedFood = entry.selectedFoodId === '__custom__' ? entry.customFood : foods.find(f => f.id === entry.selectedFoodId);
                                 
                                 return (
-                                <div key={index} className="p-4 border border-slate-200 rounded-xl bg-slate-50 relative">
+                                <div key={index} className="p-4 border border-stone-200 rounded-xl bg-stone-50 relative">
                                     {foodEntries.length > 1 && (
                                         <button 
                                             onClick={() => removeFoodEntry(index)}
-                                            className="absolute top-3 right-3 text-slate-400 hover:text-red-500 transition-colors"
+                                            className="absolute top-3 right-3 text-stone-400 hover:text-red-500 transition-colors"
                                             title="Remove food"
                                         >
                                             <X className="w-5 h-5" />
@@ -396,7 +396,7 @@ export default function Calculator() {
                                     )}
                                     <div className="space-y-4">
                                         <div>
-                                            <label className="block text-sm font-medium text-slate-700 mb-1">Select Food Brand/Formula {index > 0 ? '(Base or Topper)' : ''}</label>
+                                            <label className="block text-sm font-medium text-stone-700 mb-1">Select Food Brand/Formula {index > 0 ? '(Base or Topper)' : ''}</label>
                                             <FoodSelect foods={foods} selectedId={entry.selectedFoodId} onSelect={(id) => updateFoodEntry(index, { selectedFoodId: id })} />
                                         </div>
 
@@ -409,20 +409,20 @@ export default function Calculator() {
                                         {entry.selectedFoodId && (
                                             <div className="flex gap-3">
                                                 <div className="flex-1">
-                                                    <label className="block text-sm font-medium text-slate-700 mb-1">Daily Amount</label>
+                                                    <label className="block text-sm font-medium text-stone-700 mb-1">Daily Amount</label>
                                                     <input
                                                         type="number"
                                                         step="0.1"
                                                         min="0"
-                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
+                                                        className="w-full px-3 py-2 border border-stone-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 shadow-sm transition-colors"
                                                         value={entry.foodVolume}
                                                         onChange={(e) => updateFoodEntry(index, { foodVolume: parseFloat(e.target.value) || 0 })}
                                                     />
                                                 </div>
                                                 <div className="w-1/3">
-                                                    <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
+                                                    <label className="block text-sm font-medium text-stone-700 mb-1">Unit</label>
                                                     <select
-                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors bg-white"
+                                                        className="w-full px-3 py-2 border border-stone-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-950 shadow-sm transition-colors bg-white"
                                                         value={entry.foodUnit}
                                                         onChange={(e) => updateFoodEntry(index, { foodUnit: e.target.value as FoodUnit })}
                                                     >
@@ -452,7 +452,7 @@ export default function Calculator() {
                             
                             <button
                                 onClick={addFoodEntry}
-                                className="w-full py-3 border-2 border-dashed border-blue-200 text-blue-600 rounded-xl font-medium hover:bg-blue-50 hover:border-blue-300 transition-colors flex items-center justify-center"
+                                className="w-full py-3 border-2 border-dashed border-amber-200 text-amber-600 rounded-xl font-medium hover:bg-amber-50 hover:border-amber-300 transition-colors flex items-center justify-center"
                             >
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Another Food / Topper
@@ -464,13 +464,13 @@ export default function Calculator() {
 
                 {/* Right Column: Output & Analysis (Spans 7 cols) */}
                 <div className="lg:col-span-7">
-                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-1 h-full min-h-[500px]">
-                        <div className="bg-white rounded-lg h-full p-6 shadow-sm border border-slate-100">
+                    <div className="bg-stone-50 border border-stone-200 rounded-xl p-1 h-full min-h-[500px]">
+                        <div className="bg-white rounded-lg h-full p-6 shadow-sm border border-stone-100">
 
                             {!foodEntries.some(e => e.selectedFoodId) ? (
-                                <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
-                                    <ClipboardList className="w-16 h-16 mb-4 text-slate-300" strokeWidth={1} />
-                                    <p className="text-lg font-medium text-slate-500 mb-2">Awaiting Diet Selection</p>
+                                <div className="h-full flex flex-col items-center justify-center text-center p-8 text-stone-400">
+                                    <ClipboardList className="w-16 h-16 mb-4 text-stone-300" strokeWidth={1} />
+                                    <p className="text-lg font-medium text-stone-500 mb-2">Awaiting Diet Selection</p>
                                     <p className="text-sm max-w-sm">Please complete the setup steps on the left to reveal your dog's custom macro analysis.</p>
                                 </div>
                             ) : (

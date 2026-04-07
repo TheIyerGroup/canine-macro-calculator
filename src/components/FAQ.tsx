@@ -71,12 +71,12 @@ export default function FAQ() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            <h2 className="text-3xl font-bold text-slate-900 mb-8 text-center">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-stone-900 mb-8 text-center">Frequently Asked Questions</h2>
             <div className="space-y-6">
                 {faqs.map((faq, index) => (
-                    <div key={index} className="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                        <h3 className="text-lg font-semibold text-slate-800 mb-2">{faq.question}</h3>
-                        <p className="text-slate-600 leading-relaxed">{faq.answer}</p>
+                    <div key={index} className="bg-white border border-stone-200 rounded-xl p-6 shadow-sm">
+                        <h3 className="text-lg font-semibold text-stone-800 mb-2">{faq.question}</h3>
+                        <p className="text-stone-600 leading-relaxed">{faq.answer}</p>
                     </div>
                 ))}
             </div>
