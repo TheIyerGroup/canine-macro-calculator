@@ -2,9 +2,7 @@ import Calculator from '../components/Calculator';
 import Waitlist from '../components/Waitlist';
 import FAQ from '../components/FAQ';
 import Footer from '../components/Footer';
-import AdSenseUnit from '../components/AdSenseUnit';
 import Link from 'next/link';
-import SafeWeightManagement from './nutrition-guide/safe-weight-management/page';
 
 export default function Home() {
   return (
@@ -47,31 +45,11 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Main Layout with Ad Margins */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 grid grid-cols-1 xl:grid-cols-12 gap-8">
-
-        {/* Left Ad Space - Hidden on smaller screens */}
-        <div className="hidden xl:block xl:col-span-2">
-          <div className="sticky top-8 w-full">
-            <AdSenseUnit />
-          </div>
-        </div>
-
-        {/* Center Content */}
-        <div className="col-span-1 xl:col-span-8 w-full max-w-4xl mx-auto">
-          <Calculator />
-          <Waitlist />
-          <FAQ />
-          <SafeWeightManagement />
-        </div>
-
-        {/* Right Ad Space - Hidden on smaller screens */}
-        <div className="hidden xl:block xl:col-span-2">
-          <div className="sticky top-8 w-full">
-            <AdSenseUnit />
-          </div>
-        </div>
-
+      {/* Main Layout (Centered for Auto Ads) */}
+      <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <Calculator />
+        <Waitlist />
+        <FAQ />
       </main>
 
       <Footer />
