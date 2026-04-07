@@ -19,11 +19,11 @@ export default function Waitlist() {
                     type="email"
                     placeholder="Enter your email address"
                     required
-                    className="flex-1 px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-slate-900 placeholder-slate-400"
+                    className="flex-1 px-4 py-3 rounded-lg border border-slate-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 text-slate-900 placeholder-slate-400 shadow-sm transition-colors"
                 />
                 <button
                     type="submit"
-                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm whitespace-nowrap"
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm whitespace-nowrap focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950"
                 >
                     Join Waitlist
                 </button>

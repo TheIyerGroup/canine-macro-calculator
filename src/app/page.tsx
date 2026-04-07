@@ -39,9 +39,6 @@ export default function Home() {
             Discover the hidden nutritional gaps in your dog's commercial diet.
             Compare clinical baseline needs against established food profiles.
           </p>
-          <Link href="/nutrition-guide" className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 transition-colors shadow-sm">
-            Read Our Clinical Nutrition Guide &rarr;
-          </Link>
         </div>
       </header>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import { Plus, X, ClipboardList } from 'lucide-react';
 import FoodSelect from './FoodSelect';
 import CustomFoodForm from './CustomFoodForm';
 import ResultsDisplay from './ResultsDisplay';
@@ -248,7 +249,7 @@ export default function Calculator() {
                                             <input
                                                 type="number"
                                                 min="0"
-                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
                                                 value={stats.ageYears}
                                                 onChange={(e) => setStats({ ...stats, ageYears: parseInt(e.target.value) || 0 })}
                                             />
@@ -263,7 +264,7 @@ export default function Calculator() {
                                                 type="number"
                                                 min="0"
                                                 max="11"
-                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                                className="w-full pl-3 pr-8 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
                                                 value={stats.ageMonths}
                                                 onChange={(e) => setStats({ ...stats, ageMonths: parseInt(e.target.value) || 0 })}
                                             />
@@ -280,7 +281,7 @@ export default function Calculator() {
                                     type="number"
                                     step="0.5"
                                     min="0"
-                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
                                     value={stats.weight}
                                     onChange={(e) => setStats({ ...stats, weight: parseFloat(e.target.value) || 0 })}
                                 />
@@ -390,7 +391,7 @@ export default function Calculator() {
                                             className="absolute top-3 right-3 text-slate-400 hover:text-red-500 transition-colors"
                                             title="Remove food"
                                         >
-                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                            <X className="w-5 h-5" />
                                         </button>
                                     )}
                                     <div className="space-y-4">
@@ -413,7 +414,7 @@ export default function Calculator() {
                                                         type="number"
                                                         step="0.1"
                                                         min="0"
-                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow"
+                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors"
                                                         value={entry.foodVolume}
                                                         onChange={(e) => updateFoodEntry(index, { foodVolume: parseFloat(e.target.value) || 0 })}
                                                     />
@@ -421,7 +422,7 @@ export default function Calculator() {
                                                 <div className="w-1/3">
                                                     <label className="block text-sm font-medium text-slate-700 mb-1">Unit</label>
                                                     <select
-                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-white"
+                                                        className="w-full px-3 py-2 border border-slate-300 rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 shadow-sm transition-colors bg-white"
                                                         value={entry.foodUnit}
                                                         onChange={(e) => updateFoodEntry(index, { foodUnit: e.target.value as FoodUnit })}
                                                     >
@@ -453,7 +454,7 @@ export default function Calculator() {
                                 onClick={addFoodEntry}
                                 className="w-full py-3 border-2 border-dashed border-blue-200 text-blue-600 rounded-xl font-medium hover:bg-blue-50 hover:border-blue-300 transition-colors flex items-center justify-center"
                             >
-                                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                                <Plus className="w-4 h-4 mr-2" />
                                 Add Another Food / Topper
                             </button>
                         </div>
@@ -468,7 +469,7 @@ export default function Calculator() {
 
                             {!foodEntries.some(e => e.selectedFoodId) ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center p-8 text-slate-400">
-                                    <svg className="w-16 h-16 mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                                    <ClipboardList className="w-16 h-16 mb-4 text-slate-300" strokeWidth={1} />
                                     <p className="text-lg font-medium text-slate-500 mb-2">Awaiting Diet Selection</p>
                                     <p className="text-sm max-w-sm">Please complete the setup steps on the left to reveal your dog's custom macro analysis.</p>
                                 </div>

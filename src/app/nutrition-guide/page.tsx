@@ -52,10 +52,7 @@ export default function NutritionGuideIndex() {
 
             {/* Header */}
             <header className="w-full bg-white border-b border-slate-200 shadow-sm py-12">
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <Link href="/" className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors mb-6 pb-1 border-b-2 border-transparent hover:border-blue-600">
-                        &larr; Back to Calculator
-                    </Link>
+                <div className="max-w-4xl mx-auto px-4 text-center mt-6">
                     <div className="inline-flex items-center justify-center p-3 bg-blue-50 text-blue-600 rounded-2xl mb-4 mx-auto flex">
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
                     </div>
@@ -68,22 +65,26 @@ export default function NutritionGuideIndex() {
                 </div>
             </header>
 
-            {/* Article List */}
-            <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 py-12">
-                <div className="space-y-8">
+            {/* Article Grid Layout */}
+            <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {articles.map((article) => (
-                        <Link key={article.slug} href={`/nutrition-guide/${article.slug}`} className="block group">
-                            <article className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 transition-all duration-200 hover:shadow-md hover:border-blue-300">
-                                <div className="flex items-center justify-between mb-3">
-                                    <span className="text-sm font-medium text-blue-600 tracking-wide uppercase">{article.readTime}</span>
-                                    <svg className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                        <Link key={article.slug} href={`/nutrition-guide/${article.slug}`} className="block group h-full">
+                            <article className="flex flex-col justify-between h-full bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-blue-300">
+                                <div>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-0.5 text-xs font-semibold tracking-wide uppercase text-blue-600">
+                                            {article.readTime}
+                                        </span>
+                                        <svg className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                                    </div>
+                                    <h2 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors line-clamp-3">
+                                        {article.title}
+                                    </h2>
+                                    <p className="text-sm text-slate-500 leading-relaxed line-clamp-4">
+                                        {article.description}
+                                    </p>
                                 </div>
-                                <h2 className="text-2xl font-bold text-slate-800 mb-3 group-hover:text-blue-700 transition-colors">
-                                    {article.title}
-                                </h2>
-                                <p className="text-slate-600 leading-relaxed">
-                                    {article.description}
-                                </p>
                             </article>
                         </Link>
                     ))}

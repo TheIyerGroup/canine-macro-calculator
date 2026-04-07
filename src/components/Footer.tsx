@@ -16,7 +16,9 @@ export default function Footer() {
                     Our core algorithms and nutritional models are developed in consultation with experienced veterinary professionals and grounded in established clinical guidelines. This tool is for educational purposes only and is not a substitute for professional veterinary advice.
                 </p>
                 <p className="text-slate-400 text-xs">
-                    &copy; 2026 The Iyer Group, LLC. All rights reserved.
+                    <a href="https://www.iyergrp.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-600 transition-colors">
+                        &copy; 2026 The Iyer Group, LLC. All rights reserved.
+                    </a>
                 </p>
             </div>
         </footer>
